@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66baaf0a1a353bf4199c31459567cfd9, type: 3}
-  m_Name: UP_Down
+  m_Script: {fileID: 11500000, guid: 710c74d81289fea4784df0c564d5b9e8, type: 3}
+  m_Name: Look
   m_EditorClassIdentifier: 
-  action_name: "\u8EAB\u4F53\u8D77\u4F0F"
-  actionIndies: 0f000000
-  action_speed: 200
-  action_wait: 3
-  action_direction: 1
+  action_name: Look
+  actionIndies: 000000000100000002000000
+  action_speed: 20
+  waitTime: 0
+  waitTime_min: 0
+  waitTime_max: 1
   isPlaying: 1
+  min_vector3: {x: -30, y: -30, z: 0}
+  max_vector3: {x: 30, y: 30, z: 0}

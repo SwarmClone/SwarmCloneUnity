@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66baaf0a1a353bf4199c31459567cfd9, type: 3}
-  m_Name: "\u6447\u6446"
+  m_Script: {fileID: 11500000, guid: 7e8b696dcbc16214981bae418380d21a, type: 3}
+  m_Name: "\u8BF4\u8BDD"
   m_EditorClassIdentifier: 
-  action_name: "\u6447\u6446"
-  actionIndies: 10000000
-  action_speed: 20
-  action_wait: 0
+  action_name: "\u8BF4\u8BDD"
+  actionIndies: 0d000000
+  action_speed: 60
+  waitTime: 0.1
+  waitTime_min: 0
+  waitTime_max: 0.05
+  isPlaying: 0
   action_direction: 1
-  isPlaying: 1
