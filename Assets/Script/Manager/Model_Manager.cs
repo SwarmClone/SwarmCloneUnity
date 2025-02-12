@@ -3,11 +3,21 @@ using Live2D.Cubism.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public class Model_Manager : MonoBehaviour
 {
     // 引用Live2D模型组件
     private CubismModel model;
+
+    //观看方向
+    [Header("观看方向")]
+    public Vector2 look_pos;
+    private Vector2 curr_pos, target_pos;
+    bool isLooking;
+
+
+
     //说话
     [Header("说话")]
     public ShakeAction_Resources action_talk;
@@ -33,11 +43,62 @@ public class Model_Manager : MonoBehaviour
             is_talking = value;
             if (is_talking)
             {
+                foreach (var action in action_dictionary_shake)
+                {
+                    action.Value.isPlaying = false;
+                }
+                foreach (var action in action_dictionary_change)
+                {
+                    action.Value.isPlaying = false;
+                }
                 action_dictionary_shake[action_talk.action_name].isPlaying = true;
             }
             else
             {
+                foreach (var action in action_dictionary_shake)
+                {
+                    action.Value.isPlaying = true;
+                }
+                foreach (var action in action_dictionary_change)
+                {
+                    action.Value.isPlaying = true;
+                }
                 action_dictionary_shake[action_talk.action_name].isPlaying = false;
+            }
+        }
+    }
+    private bool emotion_play;
+    public bool Emotion_play
+    {
+        get => emotion_play;
+        set
+        {
+            emotion_play = value;
+            if (emotion_play)
+            {
+                foreach (var action in action_dictionary_shake)
+                {
+                    if(action.Key == action_talk.action_name)
+                        continue;
+                    action.Value.isPlaying = false;
+                }
+                foreach (var action in action_dictionary_change)
+                {
+                    action.Value.isPlaying = false;
+                }
+            }
+            else
+            {
+                foreach (var action in action_dictionary_shake)
+                {
+                    if(action.Key == action_talk.action_name)
+                        continue;
+                    action.Value.isPlaying = true;
+                }
+                foreach (var action in action_dictionary_change)
+                {
+                    action.Value.isPlaying = true;
+                }
             }
         }
     }
@@ -97,6 +158,7 @@ public class Model_Manager : MonoBehaviour
     }
     private void Update()
     {
+        Emotion_play = motioncont_test.instance.motionController.IsPlayingAnimation();
         animAction?.Invoke();
         model.ForceUpdateNow();
     }

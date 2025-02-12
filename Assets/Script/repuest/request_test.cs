@@ -5,7 +5,6 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 
 
 public class request_test : MonoBehaviour
@@ -14,11 +13,11 @@ public class request_test : MonoBehaviour
     private NetworkStream stream;
     public request_queue request_Queue;
     public string serverIP = "localhost";  // 服务端 IP 地址
-    public int serverPort = 8003;
+    public int serverPort = 8006;
 
     SendData modelreay = new SendData
         {
-            from = "*",
+            from = "frontend",
             type = "signal",
             payload = "ready"
         };
@@ -75,8 +74,16 @@ public class request_test : MonoBehaviour
                                 {
                                     if (property2.Value.Type == JTokenType.Float)
                                         recvdata.payload.Add(property2.Name, (float)property2.Value);
-                                    else
+                                    else if(property2.Value.Type == JTokenType.String)
                                         recvdata.payload.Add(property2.Name, property2.Value.ToString());
+                                    else
+                                    {
+                                        Dictionary<string,float> emotion = new Dictionary<string,float>();
+                                        foreach (var property3 in property2.Value.Values<JProperty>())
+                                            emotion.Add(property3.Name, (float)property3.Value);
+                                        recvdata.payload.Add(property2.Name, emotion);
+                                    }    
+                                        
                                 }
                             break;
 
@@ -94,7 +101,7 @@ public class request_test : MonoBehaviour
         {
             if (stream.DataAvailable)
             {
-                byte[] buffer = new byte[2048];
+                byte[] buffer = new byte[4098];
                 int byteread = stream.Read(buffer, 0, buffer.Length);
                 string receivedData = Encoding.UTF8.GetString(buffer, 0, byteread);
                 Debug.Log("收到服务器消息: "+receivedData);
