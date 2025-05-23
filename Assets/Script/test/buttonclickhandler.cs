@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 public class ButtonClickHandler : MonoBehaviour
 {
-    public request_queue request_Queue;
+    public tts_queue tts_queue;
     public void OnButtonClicked()
     {
         Debug.Log("按钮被按下！"); 
@@ -14,7 +14,7 @@ public class ButtonClickHandler : MonoBehaviour
         List<Dictionary<string, object>> datas = JosnToRecv(Data);
         foreach(var data in datas)
         {
-            request_Queue.ShareData=data;
+            tts_queue.GetTtsData(data);
         }
     }
      List<Dictionary<string, object>> JosnToRecv(string Josndata)
