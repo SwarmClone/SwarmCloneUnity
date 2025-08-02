@@ -25,7 +25,6 @@ public class sing_queue : MonoBehaviour
 
     public void GetSingData(Dictionary<string, object> data)
     {
-        Debug.Log("plugin get");
         singdata song = new singdata();
         song.songname = (string)data["song_id"];
         song.subtitles = GetSubTitle((string)data["subtitle_path"]);
@@ -33,6 +32,7 @@ public class sing_queue : MonoBehaviour
         {
             song.songclip = audioClip;
             singdatas.Enqueue(song);
+            Debug.Log("plugin get");
         }));
         
     }
@@ -46,6 +46,7 @@ public class sing_queue : MonoBehaviour
         else
         {
             singdatas.TryDequeue(out data);
+            Debug.Log("plugin put");
             return true;
         }
     }

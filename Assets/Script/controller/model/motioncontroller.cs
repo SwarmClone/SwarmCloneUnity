@@ -60,15 +60,31 @@ public class motioncontroller : MonoBehaviour
             else if (expressionController.CurrentExpressionIndex != 0)
                 expressionController.CurrentExpressionIndex = 0;
         }
-        if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idel") || expressionController.CurrentExpressionIndex == 0)
+        if (expressionController.enabled)
         {
-            eyesController.enabled = true;
-            Manager.instance.state.motioncontroller_IsActivate = false;
+            if (expressionController.CurrentExpressionIndex == 0)
+            {
+                eyesController.enabled = true;
+                Manager.instance.state.motioncontroller_IsActivate = false;
+            }
+            else
+            {
+                eyesController.EyeOpening = 1.0f;
+                eyesController.enabled = false;
+            }
         }
         else
         {
-            eyesController.EyeOpening = 1.0f;
-            eyesController.enabled = false;
+            if (anim.GetCurrentAnimatorStateInfo(0).IsTag("idel"))
+            {
+                eyesController.enabled = true;
+                Manager.instance.state.motioncontroller_IsActivate = false;
+            }
+            else
+            {
+                eyesController.EyeOpening = 1.0f;
+                eyesController.enabled = false;
+            } 
         }
     }
 

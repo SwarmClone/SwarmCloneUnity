@@ -7,9 +7,12 @@ public class textcontroller : MonoBehaviour
 {
     private static textcontroller _instance;
     public static textcontroller instance => _instance;
-    private TMP_Text chat_text;
+
     private float timecount;
+
     public float enter_timer;
+    public TMP_Text chat_text;
+    public TMP_Text sing_text;
 
     void Awake()
     {
@@ -52,23 +55,23 @@ public class textcontroller : MonoBehaviour
         Manager.instance.state.textcontroller_IsActivate = false;
     }
     public IEnumerator Putsubtitle(singdata data)
+    {
+        Manager.instance.state.textcontroller_IsActivate = true;
+        float timecount2 = 0.0f;
+        foreach(var subtitle in data.subtitles)
         {
-            Manager.instance.state.textcontroller_IsActivate = true;
-            float timecount2 = 0.0f;
-            foreach(var subtitle in data.subtitles)
+            while (true)
             {
-                while (true)
-                {
-                    if (timecount2 >= subtitle.Value[0])
-                        break;
-                    timecount2 += Time.deltaTime;
-                    yield return null;
-                }  
-                timecount = subtitle.Value[1] - subtitle.Value[0];
-                chat_text.text = subtitle.Key;
-                          
-            }
-            Manager.instance.state.textcontroller_IsActivate = false;
+                if (timecount2 >= subtitle.Value[0])
+                    break;
+                timecount2 += Time.deltaTime;
+                yield return null;
+            }  
+            timecount = subtitle.Value[1] - subtitle.Value[0];
+            sing_text.text = subtitle.Key;
+                        
         }
+        Manager.instance.state.textcontroller_IsActivate = false;
+    }
 }
 
